@@ -3,15 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome Point UniMe - Dipartimento di Economia</title>
+  <title>UniMe Welcome Point – Tour Virtuale</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --unime-blue: #004a87;
-      --unime-gold: #c5a059;
-      --glass-bg: rgba(10, 30, 50, 0.75);
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -19,7 +13,6 @@
       overflow: hidden;
       height: 100vh;
       width: 100vw;
-      background: #000;
     }
 
     #tour-frame {
@@ -34,10 +27,9 @@
     #bg {
       position: fixed;
       inset: 0;
-      /* Using a university-themed background placeholder */
-      background: url('https://images.unsplash.com/photo-1541339907198-e08756ebafe3?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+      background: url('https://images.unsplash.com/photo-1541339907198-e08756ebafe3?w=1600&q=80') center/cover no-repeat;
       z-index: 0;
-      filter: brightness(0.4);
+      filter: brightness(0.65);
     }
 
     #overlay {
@@ -48,7 +40,6 @@
       align-items: center;
       justify-content: center;
       animation: fadeIn 0.5s ease;
-      padding: 20px;
     }
 
     #overlay.hiding {
@@ -57,164 +48,217 @@
 
     .card {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      max-width: 800px;
-      width: 100%;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-radius: 20px;
+      grid-template-columns: 260px 1fr;
+      max-width: 760px;
+      width: 92%;
+      background: rgba(50, 50, 50, 0.70);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.1);
-      animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.09);
+      animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1);
     }
 
-    /* LEFT PANEL - BRANDING */
+    /* LEFT */
     .left {
-      padding: 40px 30px;
-      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 34px 26px;
+      border-right: 1px solid rgba(255,255,255,0.09);
       display: flex;
       flex-direction: column;
-      background: rgba(0, 0, 0, 0.2);
     }
 
-    .avatar-logo {
-      width: 80px;
-      height: 80px;
+    .avatar {
+      width: 68px;
+      height: 68px;
       border-radius: 50%;
-      background: #fff;
+      background: linear-gradient(135deg, #2c3e50, #004a99);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
-      padding: 5px;
-      box-shadow: 0 0 15px var(--unime-gold);
-    }
-
-    .avatar-logo img {
-      width: 100%;
-      height: auto;
+      font-size: 26px;
+      margin-bottom: 16px;
+      border: 2px solid rgba(255,255,255,0.12);
     }
 
     .left h2 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
       color: #fff;
-      margin-bottom: 4px;
-      line-height: 1.2;
-    }
-    
-    .left h4 {
-        font-size: 13px;
-        color: var(--unime-gold);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 15px;
+      margin-bottom: 10px;
+      line-height: 1.25;
     }
 
     .left p {
-      font-size: 13px;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.6;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
       font-weight: 300;
       flex: 1;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
     }
 
-    /* RIGHT PANEL - NAVIGATION & CTA */
+    .contact-icons {
+      display: flex;
+      gap: 9px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+    }
+
+    /* RIGHT */
     .right {
-      padding: 35px;
+      padding: 30px 28px;
       display: flex;
       flex-direction: column;
     }
 
+    .right-top {
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      margin-bottom: 20px;
+    }
+
     .right-top h3 {
-      font-size: 16px;
+      font-size: 15px;
+      font-weight: 600;
       color: #fff;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .right-top p {
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 25px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.48);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .right-bottom h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 14px;
     }
 
     .controls-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 25px;
+      gap: 8px;
+      margin-bottom: 18px;
     }
 
     .ctrl {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 12px;
+      gap: 9px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 9px 11px;
+      transition: background 0.2s;
     }
 
-    .ctrl-text .label { font-size: 11px; color: #fff; font-weight: 600; }
-    .ctrl-text .desc { font-size: 10px; color: rgba(255,255,255,0.4); }
+    .ctrl:hover { background: rgba(255,255,255,0.09); }
+
+    .ctrl-icon { font-size: 17px; flex-shrink: 0; }
+
+    .ctrl-text .label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 1px;
+    }
+
+    .ctrl-text .desc {
+      font-size: 10px;
+      color: rgba(255,255,255,0.38);
+      font-weight: 300;
+    }
 
     .social-btns {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 25px;
+      gap: 7px;
+      margin-bottom: 18px;
     }
 
     .social-btn {
-      padding: 8px 15px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.17);
       background: rgba(255,255,255,0.05);
-      color: #fff;
-      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      font-size: 11.5px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, color 0.2s;
+      font-family: 'Inter', sans-serif;
       text-decoration: none;
-      transition: 0.3s;
     }
 
     .social-btn:hover {
-      background: var(--unime-gold);
-      color: #000;
-      border-color: var(--unime-gold);
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(255,255,255,0.32);
+      transform: translateY(-1px);
+      color: #fff;
     }
 
+    .social-btn span { font-size: 12px; }
+
     .start-btn {
+      margin-top: auto;
       width: 100%;
-      padding: 15px;
-      background: var(--unime-blue);
-      border: 1px solid var(--unime-gold);
-      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255,255,255,0.11);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 10px;
       color: #fff;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background 0.2s, transform 0.15s;
     }
 
     .start-btn:hover {
-      background: #005bb3;
-      transform: scale(1.02);
+      background: rgba(255,255,255,0.19);
+      transform: translateY(-1px);
     }
 
-    /* ANIMATIONS */
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(22px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);    }
     }
 
-    @media (max-width: 600px) {
-      .card { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
-      .left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    @media (max-width: 560px) {
+      .card { grid-template-columns: 1fr; max-height: 88vh; overflow-y: auto; }
+      .left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.09); padding: 26px 22px; }
+      .right { padding: 22px; }
     }
   </style>
 </head>
@@ -233,48 +277,76 @@
     <div class="card">
 
       <div class="left">
-        <div class="avatar-logo">
-          <img src="1000005963.jpg" alt="UniMe Logo">
-        </div>
-        <h2>Welcome Point</h2>
-        <h4>Dip. di Economia</h4>
+        <div class="avatar">🎓</div>
+        <h2>UniMe Welcome Point</h2>
         <p>
-          Esplora virtualmente le nostre aule, i laboratori e gli spazi comuni. Inizia il tuo percorso accademico nel cuore di Messina.
+          Esplora il punto di accoglienza dell'Università di Messina. Un tour virtuale per scoprire i servizi dedicati a studenti e visitatori.
         </p>
-        <div class="social-btns">
-            <a href="https://www.unime.it" class="social-btn">🌐 unime.it</a>
-            <a href="mailto:orientamento@unime.it" class="social-btn">✉️ Email</a>
+        <div class="contact-icons">
+          <a href="https://wa.me/390906768300" class="icon-btn" title="WhatsApp">💬</a>
+          <a href="tel:+390906768300" class="icon-btn" title="Telefono">📱</a>
+          <a href="mailto:welcomepoint@unime.it" class="icon-btn" title="Email">✉️</a>
         </div>
       </div>
 
       <div class="right">
 
         <div class="right-top">
-          <h3>Guida alla Navigazione</h3>
-          <p>Utilizza i comandi interattivi per muoverti all'interno dell'edificio.</p>
+          <h3>Navigazione Universitaria</h3>
+          <p>Visita gli uffici e le aree comuni dell'Ateneo. Utilizza i comandi per muoverti tra le diverse sale del Welcome Point.</p>
         </div>
 
-        <div class="controls-grid">
-          <div class="ctrl">
-            <span>🖱️</span>
-            <div class="ctrl-text"><p class="label">Desktop</p><p class="desc">Trascina per ruotare</p></div>
+        <div class="right-bottom">
+          <h3>Controlli</h3>
+          <div class="controls-grid">
+            <div class="ctrl">
+              <span class="ctrl-icon">🖱️</span>
+              <div class="ctrl-text">
+                <p class="label">Guarda intorno</p>
+                <p class="desc">Clicca e trascina</p>
+              </div>
+            </div>
+            <div class="ctrl">
+              <span class="ctrl-icon">🔍</span>
+              <div class="ctrl-text">
+                <p class="label">Zoom</p>
+                <p class="desc">Rotella del mouse</p>
+              </div>
+            </div>
+            <div class="ctrl">
+              <span class="ctrl-icon">👆</span>
+              <div class="ctrl-text">
+                <p class="label">Scorri</p>
+                <p class="desc">Trascina con il dito</p>
+              </div>
+            </div>
+            <div class="ctrl">
+              <span class="ctrl-icon">🤌</span>
+              <div class="ctrl-text">
+                <p class="label">Pizzica</p>
+                <p class="desc">Pinch per lo zoom</p>
+              </div>
+            </div>
           </div>
-          <div class="ctrl">
-            <span>🔍</span>
-            <div class="ctrl-text"><p class="label">Zoom</p><p class="desc">Usa la rotella</p></div>
-          </div>
-          <div class="ctrl">
-            <span>📱</span>
-            <div class="ctrl-text"><p class="label">Touch</p><p class="desc">Scorri con le dita</p></div>
-          </div>
-          <div class="ctrl">
-            <span>📍</span>
-            <div class="ctrl-text"><p class="label">Hotspots</p><p class="desc">Clicca per spostarti</p></div>
+
+          <div class="social-btns">
+            <a href="https://www.instagram.com/unime.it/" class="social-btn" target="_blank">
+              <span>📸</span> Instagram
+            </a>
+            <a href="https://wa.me/390906768300" class="social-btn" target="_blank">
+              <span>💬</span> WhatsApp
+            </a>
+            <a href="mailto:welcomepoint@unime.it" class="social-btn">
+              <span>✉️</span> Email
+            </a>
+            <a href="https://www.unime.it" class="social-btn" target="_blank">
+              <span>🌐</span> Sito Web
+            </a>
           </div>
         </div>
 
         <button class="start-btn" onclick="dismissOverlay()">
-          Entra nel Dipartimento →
+          Entra in UniMe →
         </button>
 
       </div>
