@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Villa Dante Park – Tour Virtuale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    #tour-frame {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: 0;
+    }
+
+    #bg {
+      position: fixed;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1600&q=80') center/cover no-repeat;
+      z-index: 0;
+      filter: brightness(0.65);
+    }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    #overlay.hiding {
+      animation: fadeOut 0.4s ease forwards;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      max-width: 760px;
+      width: 92%;
+      background: rgba(50, 50, 50, 0.70);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.09);
+      animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* LEFT */
+    .left {
+      padding: 34px 26px;
+      border-right: 1px solid rgba(255,255,255,0.09);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c9a96e, #7a5c1e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 16px;
+      border: 2px solid rgba(255,255,255,0.12);
+    }
+
+    .left h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .left p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      font-weight: 300;
+      flex: 1;
+      margin-bottom: 22px;
+    }
+
+    .contact-icons {
+      display: flex;
+      gap: 9px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+    }
+
+    /* RIGHT */
+    .right {
+      padding: 30px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-top {
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      margin-bottom: 20px;
+    }
+
+    .right-top h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .right-top p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.48);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .right-bottom h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .ctrl {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 9px 11px;
+      transition: background 0.2s;
+    }
+
+    .ctrl:hover { background: rgba(255,255,255,0.09); }
+
+    .ctrl-icon { font-size: 17px; flex-shrink: 0; }
+
+    .ctrl-text .label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 1px;
+    }
+
+    .ctrl-text .desc {
+      font-size: 10px;
+      color: rgba(255,255,255,0.38);
+      font-weight: 300;
+    }
+
+    .social-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.17);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.7);
+      font-size: 11.5px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, color 0.2s;
+      font-family: 'Inter', sans-serif;
+      text-decoration: none;
+    }
+
+    .social-btn:hover {
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(255,255,255,0.32);
+      transform: translateY(-1px);
+      color: #fff;
+    }
+
+    .social-btn span { font-size: 12px; }
+
+    .start-btn {
+      margin-top: auto;
+      width: 100%;
+      padding: 12px;
+      background: rgba(255,255,255,0.11);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .start-btn:hover {
+      background: rgba(255,255,255,0.19);
+      transform: translateY(-1px);
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(22px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);    }
+    }
+
+    @media (max-width: 560px) {
+      .card { grid-template-columns: 1fr; max-height: 88vh; overflow-y: auto; }
+      .left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.09); padding: 26px 22px; }
+      .right { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="bg"></div>
+
+  <!-- Replace src with your Pano.cool embed URL -->
+  <iframe
+    id="tour-frame"
+    src="https://pano.cool/@giro360.casa/welcome-point-new"
+    allowfullscreen
+    allow="xr-spatial-tracking">
+  </iframe>
+
+  <div id="overlay">
+    <div class="card">
+
+      <!-- LEFT PANEL -->
+      <div class="left">
+        <div class="avatar">🏠</div>
+        <h2>Villa Dante Park</h2>
+        <p>
+          Benvenuto nel tour virtuale interattivo. Esplora ogni ambiente liberamente e scopri tutti i dettagli della proprietà in modo immersivo.
+        </p>
+        <div class="contact-icons">
+          <a href="https://wa.me/TUONUMERO" class="icon-btn" title="WhatsApp">💬</a>
+          <a href="tel:+39TUONUMERO" class="icon-btn" title="Telefono">📱</a>
+          <a href="mailto:info@giro360.casa" class="icon-btn" title="Email">✉️</a>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="right">
+
+        <div class="right-top">
+          <h3>Come navigare il tour</h3>
+          <p>Muoviti liberamente all'interno della proprietà usando il mouse, la tastiera o le dita su dispositivi touch.</p>
+        </div>
+
+        <div class="right-bottom">
+          <h3>Controlli</h3>
+          <div class="controls-grid">
+            <div class="ctrl">
+              <span class="ctrl-icon">🖱️</span>
+              <div class="ctrl-text">
+                <p class="label">Guarda intorno</p>
+                <p class="desc">Clicca e trascina</p>
+              </div>
+            </div>
+            <div class="ctrl">
+              <span class="ctrl-icon">🔍</span>
+              <div class="ctrl-text">
+                <p class="label">Zoom</p>
+                <p class="desc">Rotella del mouse</p>
+              </div>
+            </div>
+            <div class="ctrl">
+              <span class="ctrl-icon">👆</span>
+              <div class="ctrl-text">
+                <p class="label">Scorri</p>
+                <p class="desc">Trascina con il dito</p>
+              </div>
+            </div>
+            <div class="ctrl">
+              <span class="ctrl-icon">🤌</span>
+              <div class="ctrl-text">
+                <p class="label">Pizzica</p>
+                <p class="desc">Pinch per lo zoom</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="social-btns">
+            <a href="https://instagram.com/giro360.casa" class="social-btn" target="_blank">
+              <span>📸</span> Instagram
+            </a>
+            <a href="https://wa.me/TUONUMERO" class="social-btn" target="_blank">
+              <span>💬</span> WhatsApp
+            </a>
+            <a href="mailto:info@giro360.casa" class="social-btn">
+              <span>✉️</span> Email
+            </a>
+            <a href="https://giro360.casa" class="social-btn" target="_blank">
+              <span>🌐</span> Sito Web
+            </a>
+          </div>
+        </div>
+
+        <button class="start-btn" onclick="dismissOverlay()">
+          Inizia il Tour →
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function dismissOverlay() {
+      const o = document.getElementById('overlay');
+      o.classList.add('hiding');
+      setTimeout(() => o.remove(), 400);
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') dismissOverlay();
+    });
+  </script>
+
+</body>
+</html>
